@@ -1,0 +1,164 @@
+//Casos de prueba a implementar
+
+import mensajeria.*
+
+//describe "TestChasquis" {
+		
+//Chasqui - integrante 1
+//No debe poder enviar un mensaje largo: “12345678901234567890123456789012345678901234567890”
+test "Chasqui no debe enviar mensajes mayores a un valor" {
+	assert.notThat(chasqui.puedeEnviarMensaje('12345678901234567890123456789012345678901234567890'))
+}
+//Debe poder enviar un mensaje corto: "1234567890123456789012345678901234567890123456789"
+test "Chasqui puede enviar mensajes menores a un valor" {
+	assert.that(chasqui.puedeEnviarMensaje("1234567890123456789012345678901234567890123456789"))
+}
+//Calcular el costo del mensaje "123456789012" => 24
+test "Chasqui calcula el costo del mensaje" {
+	assert.equals(24,chasqui.costoMensaje("123456789012"))
+}
+
+//Sherpa - integrante 2
+//No debe poder enviar un mensaje: "123456789" (tiene cantidad impar)
+test "Sherpa no debe poder enviar mensajes con cantidad impar" {
+	assert.notThat(sherpa.puedeEnviarMensaje("123456789"))
+}
+//Debe poder enviar un mensaje: "1234567890" (tiene cantidad par)
+test "Sherpa debe poder enviar mensajes con cantidad par" {
+	assert.that(sherpa.puedeEnviarMensaje("1234567890"))
+}
+//Calcular el costo del mensaje "1234567890" => 60
+test "Sherpa calcula el costo del mensaje" {
+	assert.equals(60,sherpa.costoMensaje("1234567890"))
+}
+
+//Messich - integrante 3
+//No debe poder enviar el mensaje: "abracadabra" (empieza con ‘a’)
+test "Messich no debe poder enviar mensajes por empezar por una letra en particular previamente definida" {
+	assert.notThat(messich.puedeEnviarMensaje("abracadabra"))
+}
+//Debe poder enviar un mensaje par: "pata de cabra" (no empieza con ‘a’)
+test "Messich debe poder enviar mensajes par (no empieza por una letra en particular previamente definida)" {
+	assert.that(messich.puedeEnviarMensaje("pata de cabra"))
+}
+//Calcular el costo del mensaje "pata de cabra" => 30
+test "Messich calcula el costo del mensaje" {
+	assert.equals(30,messich.costoMensaje("pata de cabra"))
+}
+
+//Pali - común
+//No debe poder enviar el mensaje: "abracadabra" (no es palíndromo)
+test "Pali no debe poder enviar mensaje por no ser palindromo" {
+	assert.notThat(pali.puedeEnviarMensaje("abracadabra"))
+}
+//Debe poder enviar un mensaje par: "Anita lava la tina" (es palíndromo)
+test "Pali debe poder enviar mensaje por ser palindromo" {
+	assert.that(pali.puedeEnviarMensaje("Anita lava la tina"))
+}
+//Calcular el costo del mensaje corto "Anita lava la tina" => 72
+test "Pali calcula el costo del mensaje corto" {
+	assert.equals(72,pali.costoMensaje("Anita lava la tina"))
+}
+//Calcular el costo del mensaje largo "Allí va Ramón y no maravilla" => 80
+test "Pali calcula el costo del mensaje largo" {
+	assert.equals(80,pali.costoMensaje('Allí va Ramón y no maravilla'))
+}
+
+//}
+//Agencia de mensajería - común
+//Para mandar el mensaje “nomelacont”, se elige a messich
+//Para mandar el mensaje “hola chau hola chau hola chau hola chau hola chau”, se elige a chasqui
+//Para mandar el mensaje “al cortar los tomates en juliana, luego hay que sofreirlos con ajo y morrón 
+//verde o rojo si no se tiene a mano”, se elige a sherpa
+test "La Agencia recomienda para enviar el mensaje al mensajero que pueda envar el mensaje al menor costo" {
+	assert.equals(messich, agencia.quienEnvia('nomelacont'))
+	assert.equals(chasqui, agencia.quienEnvia('hola chau hola chau hola chau hola chau hola chau'))
+    assert.equals(sherpa, agencia.quienEnvia('al cortar los tomates en juliana, luego hay que sofreirlos con ajo y morrón verde o rojo si no se tiene a mano'))
+
+}
+
+test "La Agencia desea enviar un mensaje menor al limite de caracteres" {
+	assert.equals(messich, agencia.quienEnvia('nomelacont'))
+}
+// ---------------------------------------------------------------------------------------------
+//                                 SEGUNDA           ENTREGA
+// ---------------------------------------------------------------------------------------------
+
+
+// Calcular el costo del mensaje de pichca / para 'hola' seria 4 * 4, 4 * 5, 4 * 6
+test "Calcular el costo del mensaje 'hola' para pichca" {
+	assert.that([12,16,20,24,28].contains(pichca.costoMensaje('hola')))
+}
+
+test "Pichca no debe poder enviar un mensaje menor a un limite de palabras" {
+	assert.notThat(pichca.puedeEnviarMensaje("Hola"))
+}
+
+test "Pichca debe poder enviar un mensaje mayor a un limite de palabras" {
+	assert.that(pichca.puedeEnviarMensaje("Hola Juan Carlos! Como estás?"))
+}
+
+//Tests para Mensajeros 
+
+test "Los mensajeros deben poder enviar un mensaje con una longitud mayor o igual a un limite"{
+	assert.that(mensajeroEstandar.puedeEnviarMensaje("Este es un mensaje muy importante para un test"))
+	assert.that(mensajeroRapido.puedeEnviarMensaje("Este es un mensaje muy importante para un test"))
+	assert.that(mensajeroVIP.puedeEnviarMensaje("Este es un mensaje muy importante para un test"))
+}
+
+test "Los mensajeros no deben poder enviar un mensaje con una longitud menor a un limite"{
+	assert.notThat(mensajeroEstandar.puedeEnviarMensaje("Hola maquinola"))
+	assert.notThat(mensajeroRapido.puedeEnviarMensaje("Hola maquinola"))
+	assert.notThat(mensajeroVIP.puedeEnviarMensaje("Hola maquinola"))
+}
+
+test "El mensajero del sector estandar calcula el costo de un mensaje corto"{
+	assert.equals(45, mensajeroEstandar.costoMensaje("ya ni se"))
+}
+
+test "El mensajero del sector rapido calcula el costo de un mensaje corto"{
+	assert.equals(60, mensajeroRapido.costoMensaje("ya ni se"))
+}
+
+test "El mensajero del sector VIP calcula el costo de un mensaje corto"{
+	assert.equals(90, mensajeroVIP.costoMensaje("ya ni se"))
+}
+
+// Tests empresaDeMensajeria
+
+test "No se debe poder recibir un mensaje vacío"{
+	assert.throwsExceptionWithMessage("No se puede recibir un mensaje vacío.", {empresaDeMensajeria.recibirMensaje("")})
+}
+
+test "No se debe poder recibir un mensaje que ningun mensajero puede enviar"{
+	assert.throwsExceptionWithMessage("Ningún mensajero de los disponibles puede enviar el mensaje.", {empresaDeMensajeria.recibirMensaje("anda a saber que puedo poner porque ver que nadie lo pueda enviar esta dificilito")})
+}
+
+test "Un mensaje que se pueda recibir, debe registrarse en el historial"{
+	const mensaje = "Hola"
+	empresaDeMensajeria.recibirMensaje(mensaje)
+	assert.that(empresaDeMensajeria.historial().get(0).mensajeEnviado() == mensaje)
+	assert.that(empresaDeMensajeria.historial().get(0).mensajero() == agencia.quienEnvia(mensaje))
+	assert.that(empresaDeMensajeria.historial().get(0).fecha() == new Date())
+}
+
+test "La empresa de mensajería calcula la ganancia neta del mes"{
+	empresaDeMensajeria.recibirMensaje("Mensaje corto")
+	empresaDeMensajeria.recibirMensaje("Un mensaje largo para los tests")
+	assert.equals(1320, empresaDeMensajeria.obtenerGananciaNetaDelMes())
+}
+
+test "La empresa de mensajería calcula al empleado del mes en funcion de los mensajes enviados"{
+	empresaDeMensajeria.recibirMensaje("Hola")
+	empresaDeMensajeria.recibirMensaje('nomelacont')
+	empresaDeMensajeria.recibirMensaje('nomelacont')
+	assert.equals(agencia.quienEnvia('nomelacont'), empresaDeMensajeria.obtenerEmpleadoDelMes())
+}
+
+
+
+
+
+
+
+

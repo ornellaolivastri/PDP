@@ -1,0 +1,54 @@
+TP Objetos 2021 - Chasquis 2.0 - Entrega 1
+Nos han pedido modelar un sistema de mensajería personalizado. Para nuestra primera versión nos piden que los ayudemos a elegir qué mensajeros elegir a la hora de mandar un mensaje, que es simplemente una frase como “El tractorcito rojo que silbó y bufó” o  “El pájaro está en el nido”.
+Las mensajeras
+Queremos modelar a las siguientes personas mensajeras:
+
+Chasqui - integrante 1
+puede enviar mensajes menores a 50 caracteres
+el costo de cada mensaje es 2 * el tamaño del mensaje
+
+Sherpa - integrante 2
+Amigo de Chasqui de cuando fue de vacaciones a Nepal,
+puede enviar mensajes con tamaño par
+el costo de cada mensaje es 60, pero puede cambiar a futuro
+
+Messich - integrante 3
+La persona más futbolera, 
+puede enviar mensajes siempre que no comiencen con la letra ‘a’ minúscula
+el costo de cada mensaje es 10 * palabra, aunque queremos poder cambiar ese valor 10 en caso de ser necesario
+
+Pali - común a todos los integrantes
+puede enviar mensajes solo si son palíndromos, sin importar espacios o mayúsculas/minúsculas. Por ejemplo: “Anita lava la tina” es palíndromo, no distingue la primera A que es mayúscula vs. la última a que es minúscula, ni los espacios en blanco.
+el costo de cada mensaje es 4 * el tamaño del mensaje hasta un máximo de 80.
+
+Agencia de mensajería - común a todos los integrantes
+La agencia tiene como mensajeros a Chasqui. Sherpa, Messich y Pali, y quiere saber a quién debe pedirle que envíe un mensaje. La persona mensajera elegida debe ser alguien que
+pueda enviar el mensaje
+y además tenga el costo más bajo para ese mensaje.
+
+Casos de prueba a implementar
+Chasqui - integrante 1
+No debe poder enviar un mensaje largo: “12345678901234567890123456789012345678901234567890”
+Debe poder enviar un mensaje corto: "1234567890123456789012345678901234567890123456789"
+Calcular el costo del mensaje "123456789012" => 24
+
+Sherpa - integrante 2
+No debe poder enviar un mensaje: "123456789" (tiene cantidad impar)
+Debe poder enviar un mensaje: "1234567890" (tiene cantidad par)
+Calcular el costo del mensaje "1234567890" => 60
+
+Messich - integrante 3
+No debe poder enviar el mensaje: "abracadabra" (empieza con ‘a’)
+Debe poder enviar un mensaje par: "pata de cabra" (no empieza con ‘a’)
+Calcular el costo del mensaje "pata de cabra" => 30
+
+Pali - común
+No debe poder enviar el mensaje: "abracadabra" (no es palíndromo)
+Debe poder enviar un mensaje par: "Anita lava la tina" (es palíndromo)
+Calcular el costo del mensaje corto "Anita lava la tina" => 72
+Calcular el costo del mensaje largo "Allí va Ramón y no maravilla" => 80
+
+Agencia de mensajería - común
+Para mandar el mensaje “nomelacont”, se elige a messich
+Para mandar el mensaje “hola chau hola chau hola chau hola chau hola chau”, se elige a chasqui
+Para mandar el mensaje “al cortar los tomates en juliana, luego hay que sofreirlos con ajo y morrón verde o rojo si no se tiene a mano”, se elige a sherpa
